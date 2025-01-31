@@ -1,0 +1,45 @@
+{
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "nextWeek": "Next 7 days",
+  "nextHours": "Next 10 Hours",
+  "majorCities": "Major World Cities",
+  "airQuality": {
+    "title": "Air Quality",
+    "good": "Good",
+    "fair": "Fair",
+    "moderate": "Moderate",
+    "poor": "Poor",
+    "veryPoor": "Very Poor",
+    "unknown": "Unknown"
+  },
+  "weather": {
+    "feelsLike": "Feels like",
+    "wind": "Wind",
+    "humidity": "Humidity",
+    "pressure": "Pressure",
+    "precipitation": "Precipitation",
+    "rain": "Rain"
+  },
+  "settings": {
+    "title": "Settings",
+    "units": {
+      "title": "Temperature Units",
+      "celsius": "Celsius (°C)",
+      "fahrenheit": "Fahrenheit (°F)"
+    },
+    "windSpeed": {
+      "title": "Wind Speed",
+      "kmh": "km/h",
+      "mph": "mph",
+      "ms": "m/s"
+    },
+    "language": {
+      "title": "Language",
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "ka": "ქართული"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "today": "დღეს",
+  "tomorrow": "ხვალ",
+  "nextWeek": "მომდევნო 7 დღე",
+  "nextHours": "მომდევნო 10 საათი",
+  "majorCities": "მსხვილი ქალაქები",
+  "airQuality": {
+    "title": "ჰაერის ხარისხი",
+    "good": "კარგი",
+    "fair": "საშუალო",
+    "moderate": "ზომიერი",
+    "poor": "ცუდი",
+    "veryPoor": "ძალიან ცუდი",
+    "unknown": "უცნობი"
+  },
+  "weather": {
+    "feelsLike": "იგრძნობა როგორც",
+    "wind": "ქარი",
+    "humidity": "ტენიანობა",
+    "pressure": "წნევა",
+    "precipitation": "ნალექი",
+    "rain": "წვიმა"
+  },
+  "settings": {
+    "title": "პარამეტრები",
+    "units": {
+      "title": "ტემპერატურის ერთეულები",
+      "celsius": "ცელსიუსი (°C)",
+      "fahrenheit": "ფარენჰეიტი (°F)"
+    },
+    "windSpeed": {
+      "title": "ქარის სიჩქარე",
+      "kmh": "კმ/სთ",
+      "mph": "მილი/სთ",
+      "ms": "მ/წმ"
+    },
+    "language": {
+      "title": "ენა",
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "ka": "ქართული"
+    }
+  }
+}

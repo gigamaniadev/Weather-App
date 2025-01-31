@@ -1,0 +1,45 @@
+{
+  "today": "Aujourd'hui",
+  "tomorrow": "Demain",
+  "nextWeek": "7 prochains jours",
+  "nextHours": "10 prochaines heures",
+  "majorCities": "Grandes villes",
+  "airQuality": {
+    "title": "Qualité de l'air",
+    "good": "Bonne",
+    "fair": "Correcte",
+    "moderate": "Modérée",
+    "poor": "Mauvaise",
+    "veryPoor": "Très mauvaise",
+    "unknown": "Inconnue"
+  },
+  "weather": {
+    "feelsLike": "Ressenti",
+    "wind": "Vent",
+    "humidity": "Humidité",
+    "pressure": "Pression",
+    "precipitation": "Précipitation",
+    "rain": "Pluie"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "units": {
+      "title": "Unités de température",
+      "celsius": "Celsius (°C)",
+      "fahrenheit": "Fahrenheit (°F)"
+    },
+    "windSpeed": {
+      "title": "Vitesse du vent",
+      "kmh": "km/h",
+      "mph": "mph",
+      "ms": "m/s"
+    },
+    "language": {
+      "title": "Langue",
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "ka": "ქართული"
+    }
+  }
+}
