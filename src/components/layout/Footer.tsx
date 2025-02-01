@@ -31,28 +31,27 @@ export function Footer({ isDark }: FooterProps) {
 
         {/* Social media links */}
         <div className="flex -mx-2">
-          {/* Facebook link */}
+          {/* Linkedin link */}
           <a
-            href="#"
+            href="https://www.linkedin.com/in/gigamaniadev/"
             className={`mx-2 transition-colors duration-300 ${
               isDark ? "text-gray-300" : "text-black"
             } hover:text-blue-500 dark:hover:text-blue-400`}
             aria-label="Facebook"
           >
-            {/* Facebook icon */}
+            {/* Linkedin icon */}
             <svg
               className="w-5 h-5 fill-current"
-              viewBox="0 0 24 24"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
             >
-              <path d="M2.00195 12.002C2.00312 16.9214 5.58036 21.1101 10.439 21.881V14.892H7.90195V12.002H10.442V9.80204C10.3284 8.75958 10.6845 7.72064 11.4136 6.96698C12.1427 6.21332 13.1693 5.82306 14.215 5.90204C14.9655 5.91417 15.7141 5.98101 16.455 6.10205V8.56104H15.191C14.7558 8.50405 14.3183 8.64777 14.0017 8.95171C13.6851 9.25566 13.5237 9.68693 13.563 10.124V12.002H16.334L15.891 14.893H13.563V21.881C18.8174 21.0506 22.502 16.2518 21.9475 10.9611C21.3929 5.67041 16.7932 1.73997 11.4808 2.01722C6.16831 2.29447 2.0028 6.68235 2.00195 12.002Z"></path>
+              <path d="M24,4H6C4.895,4,4,4.895,4,6v18c0,1.105,0.895,2,2,2h18c1.105,0,2-0.895,2-2V6C26,4.895,25.105,4,24,4z M10.954,22h-2.95 v-9.492h2.95V22z M9.449,11.151c-0.951,0-1.72-0.771-1.72-1.72c0-0.949,0.77-1.719,1.72-1.719c0.948,0,1.719,0.771,1.719,1.719 C11.168,10.38,10.397,11.151,9.449,11.151z M22.004,22h-2.948v-4.616c0-1.101-0.02-2.517-1.533-2.517 c-1.535,0-1.771,1.199-1.771,2.437V22h-2.948v-9.492h2.83v1.297h0.04c0.394-0.746,1.356-1.533,2.791-1.533 c2.987,0,3.539,1.966,3.539,4.522V22z"></path>
             </svg>
           </a>
 
           {/* Github link */}
           <a
-            href="#"
+            href="https://github.com/gigamaniadev"
             className={`mx-2 transition-colors duration-300 ${
               isDark ? "text-gray-300" : "text-black"
             } hover:text-blue-500 dark:hover:text-blue-400`}
