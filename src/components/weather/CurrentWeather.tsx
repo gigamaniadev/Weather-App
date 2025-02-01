@@ -11,6 +11,7 @@ import {
   CloudRain,
   CloudSnow,
   CloudLightning,
+  CloudDrizzle,
 } from "lucide-react";
 import { WeatherData } from "../../types";
 import { formatTime } from "../../utils/dateUtils";
