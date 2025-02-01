@@ -6,6 +6,11 @@ import {
   Sunrise,
   Sunset,
   AlertCircle,
+  Sun,
+  Cloud,
+  CloudRain,
+  CloudSnow,
+  CloudLightning,
 } from "lucide-react";
 import { WeatherData } from "../../types";
 import { formatTime } from "../../utils/dateUtils";
@@ -13,6 +18,32 @@ import { convertWindSpeed } from "../../utils/windSpeedUtils";
 import { convertTemperature } from "../../utils/temperatureUtils";
 import { useTranslation } from "react-i18next";
 import { Skeleton } from "../ui/Skeleton";
+
+/**
+ * Maps weather icon codes to corresponding Lucide icons
+ * @param iconCode - OpenWeatherMap icon code
+ * @returns JSX Element of the corresponding weather icon
+ */
+const getWeatherIcon = (iconCode: string) => {
+  const size = "w-16 h-16";
+  switch (iconCode.slice(0, 2)) {
+    case "01":
+      return <Sun className={`${size} text-yellow-500`} />;
+    case "02":
+    case "03":
+    case "04":
+      return <Cloud className={`${size} text-gray-500`} />;
+    case "09":
+    case "10":
+      return <CloudRain className={`${size} text-blue-500`} />;
+    case "11":
+      return <CloudLightning className={`${size} text-yellow-600`} />;
+    case "13":
+      return <CloudSnow className={`${size} text-blue-300`} />;
+    default:
+      return <CloudDrizzle className={`${size} text-blue-400`} />;
+  }
+};
 
 /**
  * Props interface for the CurrentWeather component
@@ -115,11 +146,7 @@ export function CurrentWeather({
         <span className="text-5xl sm:text-6xl font-bold">
           {convertTemperature(weather.temp, units)}°
         </span>
-        <img
-          src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-          alt={weather.description}
-          className="w-16 h-16"
-        />
+        {getWeatherIcon(weather.icon)}
       </div>
       <div className="space-y-2 text-sm">
         <div className="capitalize">{weather.description}</div>

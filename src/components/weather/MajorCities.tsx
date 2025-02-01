@@ -5,6 +5,40 @@ import { fetchMajorCitiesWeather } from "../../services/weatherService";
 import { convertTemperature } from "../../utils/temperatureUtils";
 import { useTranslation } from "react-i18next";
 import { Skeleton } from "../ui/Skeleton";
+import {
+  Sun,
+  Cloud,
+  CloudRain,
+  CloudSnow,
+  CloudLightning,
+  CloudDrizzle,
+} from "lucide-react";
+
+/**
+ * Maps weather icon codes to corresponding Lucide icons
+ * @param iconCode - OpenWeatherMap icon code
+ * @returns JSX Element of the corresponding weather icon
+ */
+const getWeatherIcon = (iconCode: string) => {
+  const size = "w-6 h-6";
+  switch (iconCode.slice(0, 2)) {
+    case "01":
+      return <Sun className={`${size} text-yellow-500`} />;
+    case "02":
+    case "03":
+    case "04":
+      return <Cloud className={`${size} text-gray-500`} />;
+    case "09":
+    case "10":
+      return <CloudRain className={`${size} text-blue-500`} />;
+    case "11":
+      return <CloudLightning className={`${size} text-yellow-600`} />;
+    case "13":
+      return <CloudSnow className={`${size} text-blue-300`} />;
+    default:
+      return <CloudDrizzle className={`${size} text-blue-400`} />;
+  }
+};
 
 // Interface definitions for component props and data structures
 interface MajorCitiesProps {
@@ -158,11 +192,7 @@ export function MajorCities({
                   {city.country}
                 </div>
               </div>
-              <img
-                src={`https://openweathermap.org/img/wn/${city.icon}.png`}
-                alt={city.description}
-                className="w-12 h-12"
-              />
+              {getWeatherIcon(city.icon)}
             </div>
             <div className="mt-2">
               <div className="text-2xl font-bold">
