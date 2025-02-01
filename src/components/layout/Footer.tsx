@@ -34,6 +34,7 @@ export function Footer({ isDark }: FooterProps) {
           {/* Linkedin link */}
           <a
             href="https://www.linkedin.com/in/gigamaniadev/"
+            target="_blank"
             className={`mx-2 transition-colors duration-300 ${
               isDark ? "text-gray-300" : "text-black"
             } hover:text-blue-500 dark:hover:text-blue-400`}
@@ -52,6 +53,7 @@ export function Footer({ isDark }: FooterProps) {
           {/* Github link */}
           <a
             href="https://github.com/gigamaniadev"
+            target="_blank"
             className={`mx-2 transition-colors duration-300 ${
               isDark ? "text-gray-300" : "text-black"
             } hover:text-blue-500 dark:hover:text-blue-400`}
