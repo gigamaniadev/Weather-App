@@ -3,12 +3,43 @@ import {
   Wind,
   Droplets,
   Globe2,
-  CloudRain,
-  Loader2,
   AlertCircle,
+  Sun,
+  Cloud,
+  CloudRain,
+  CloudSnow,
+  CloudLightning,
+  CloudDrizzle,
+  Loader2,
 } from "lucide-react";
 import { TomorrowWeatherData } from "../../types";
 import { convertWindSpeed } from "../../utils/windSpeedUtils";
+
+/**
+ * Maps weather icon codes to corresponding Lucide icons
+ * @param iconCode - OpenWeatherMap icon code
+ * @returns JSX Element of the corresponding weather icon
+ */
+const getWeatherIcon = (iconCode: string) => {
+  const size = "w-16 h-16";
+  switch (iconCode.slice(0, 2)) {
+    case "01":
+      return <Sun className={`${size} text-yellow-500`} />;
+    case "02":
+    case "03":
+    case "04":
+      return <Cloud className={`${size} text-gray-500`} />;
+    case "09":
+    case "10":
+      return <CloudRain className={`${size} text-blue-500`} />;
+    case "11":
+      return <CloudLightning className={`${size} text-yellow-600`} />;
+    case "13":
+      return <CloudSnow className={`${size} text-blue-300`} />;
+    default:
+      return <CloudDrizzle className={`${size} text-blue-400`} />;
+  }
+};
 
 /**
  * Interface for TomorrowWeather component props
@@ -83,11 +114,7 @@ export function TomorrowWeather({
             {Math.round(weather.temp_min)}°
           </span>
         </div>
-        <img
-          src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-          alt={weather.description}
-          className="w-16 h-16"
-        />
+        {getWeatherIcon(weather.icon)}
       </div>
 
       {/* Weather details section */}
