@@ -4,12 +4,18 @@ import { fetchAirQuality } from "../../services/weatherService";
 import { useTranslation } from "react-i18next";
 import { Skeleton } from "../ui/Skeleton";
 
+/**
+ * Base props interface for the AirQuality component
+ */
 interface AirQualityProps {
   isDark: boolean;
   latitude: number;
   longitude: number;
 }
 
+/**
+ * Interface defining the structure of air quality measurement data
+ */
 interface AirQualityData {
   aqi: number;
   co: number;
@@ -20,6 +26,12 @@ interface AirQualityData {
   so2: number;
 }
 
+/**
+ * Helper function to get air quality information based on AQI value
+ * @param aqi - Air Quality Index value
+ * @param t - Translation function
+ * @returns Object containing label, color and description for the AQI
+ */
 const getAQIInfo = (
   aqi: number,
   t: any
@@ -64,6 +76,10 @@ const getAQIInfo = (
   }
 };
 
+/**
+ * Component to display individual pollutant measurements
+ * @param props - Component properties including value, threshold and display options
+ */
 const PollutantCard = ({
   label,
   value,
@@ -79,6 +95,9 @@ const PollutantCard = ({
   threshold?: number;
   isHighBad?: boolean;
 }) => {
+  /**
+   * Determines text color based on pollutant value and threshold
+   */
   const getHealthStatus = (
     value: number,
     threshold: number,
@@ -116,6 +135,10 @@ const PollutantCard = ({
   );
 };
 
+/**
+ * Loading skeleton component for AirQuality
+ * @param props.isDark - Dark mode toggle
+ */
 function AirQualitySkeleton({ isDark }: { isDark: boolean }) {
   return (
     <div
@@ -150,6 +173,11 @@ function AirQualitySkeleton({ isDark }: { isDark: boolean }) {
   );
 }
 
+/**
+ * Main AirQuality component that displays current air quality data
+ * Fetches and displays AQI and individual pollutant measurements
+ * @param props - Component properties including location coordinates and display mode
+ */
 export function AirQuality({ isDark, latitude, longitude }: AirQualityProps) {
   const { t } = useTranslation();
   const [airQuality, setAirQuality] = useState<AirQualityData | null>(null);
@@ -209,7 +237,7 @@ export function AirQuality({ isDark, latitude, longitude }: AirQualityProps) {
   return (
     <div
       className={`lg:col-span-6 rounded-xl md:rounded-2xl p-4 md:p-6 ${
-        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-md"
+        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-sm"
       }`}
     >
       <div className="flex items-center justify-between mb-6">

@@ -14,6 +14,9 @@ import { convertTemperature } from "../../utils/temperatureUtils";
 import { useTranslation } from "react-i18next";
 import { Skeleton } from "../ui/Skeleton";
 
+/**
+ * Props interface for the CurrentWeather component
+ */
 interface CurrentWeatherProps {
   weatherLoading: boolean;
   weatherError: string | null;
@@ -23,6 +26,10 @@ interface CurrentWeatherProps {
   isDark: boolean;
 }
 
+/**
+ * Loading skeleton component for CurrentWeather
+ * @param props.isDark - Dark mode toggle
+ */
 function CurrentWeatherSkeleton({ isDark }: { isDark: boolean }) {
   return (
     <div
@@ -55,6 +62,11 @@ function CurrentWeatherSkeleton({ isDark }: { isDark: boolean }) {
   );
 }
 
+/**
+ * Component that displays current weather conditions
+ * Shows temperature, weather description, and various meteorological measurements
+ * @param props - Component properties including weather data and display preferences
+ */
 export function CurrentWeather({
   weatherLoading,
   weatherError,

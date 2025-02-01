@@ -3,20 +3,30 @@ import { AlertTriangle } from "lucide-react";
 import { fetchWeatherAlerts } from "../../services/weatherService";
 import { Skeleton } from "../ui/Skeleton";
 
+/**
+ * Props interface for the WeatherAlert component
+ */
 interface WeatherAlertProps {
-  isDark: boolean;
-  latitude: number;
-  longitude: number;
+  isDark: boolean; // Controls dark/light theme
+  latitude: number; // Geographic latitude
+  longitude: number; // Geographic longitude
 }
 
+/**
+ * Interface representing a weather alert data structure
+ */
 interface Alert {
-  event: string;
-  description: string;
-  start: number;
-  end: number;
-  severity?: string;
+  event: string; // Type of weather event
+  description: string; // Detailed description of the alert
+  start: number; // Unix timestamp for alert start
+  end: number; // Unix timestamp for alert end
+  severity?: string; // Alert severity level (optional)
 }
 
+/**
+ * Skeleton loader component for weather alerts
+ * @param isDark - Boolean indicating dark mode
+ */
 function WeatherAlertSkeleton({ isDark }: { isDark: boolean }) {
   return (
     <div
@@ -54,6 +64,10 @@ function WeatherAlertSkeleton({ isDark }: { isDark: boolean }) {
   );
 }
 
+/**
+ * Main WeatherAlert component that displays active weather alerts for a given location
+ * Includes auto-refresh functionality and error handling
+ */
 export function WeatherAlert({
   isDark,
   latitude,
@@ -63,6 +77,10 @@ export function WeatherAlert({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Fetches weather alerts and updates component state
+   * Runs on mount and every 5 minutes thereafter
+   */
   useEffect(() => {
     const loadAlerts = async () => {
       if (!latitude || !longitude) return;
@@ -86,6 +104,11 @@ export function WeatherAlert({
     return () => clearInterval(interval);
   }, [latitude, longitude]);
 
+  /**
+   * Converts a timestamp into a relative time string (e.g., "2h ago")
+   * @param timestamp - Unix timestamp in seconds
+   * @returns Formatted relative time string
+   */
   const formatTimeAgo = (timestamp: number) => {
     const now = Date.now();
     const diff = now - timestamp * 1000;
@@ -98,6 +121,11 @@ export function WeatherAlert({
     return `${minutes}m ago`;
   };
 
+  /**
+   * Determines the CSS color class based on alert severity
+   * @param severity - Alert severity level
+   * @returns CSS class name for background color
+   */
   const getSeverityColor = (severity: string = "moderate") => {
     switch (severity.toLowerCase()) {
       case "extreme":
@@ -113,15 +141,17 @@ export function WeatherAlert({
     }
   };
 
+  // Render loading state
   if (loading) {
     return <WeatherAlertSkeleton isDark={isDark} />;
   }
 
+  // Render error state
   if (error) {
     return (
       <div
         className={`lg:col-span-4 rounded-xl md:rounded-2xl p-4 md:p-6 ${
-          isDark ? "bg-[#2C2C2E]" : "bg-white shadow-md"
+          isDark ? "bg-[#2C2C2E]" : "bg-white shadow-sm"
         }`}
       >
         <div className="flex flex-col items-center justify-center h-48 text-red-500">
@@ -132,10 +162,11 @@ export function WeatherAlert({
     );
   }
 
+  // Render main component with alerts or no-alerts message
   return (
     <div
       className={`lg:col-span-4 rounded-xl md:rounded-2xl p-4 md:p-6 ${
-        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-md"
+        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-sm"
       }`}
     >
       <div className="flex items-center justify-between mb-6">

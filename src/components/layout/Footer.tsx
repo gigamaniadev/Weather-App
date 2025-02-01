@@ -1,17 +1,24 @@
+// Import necessary icons from lucide-react
 import { Cloud, CloudRain } from "lucide-react";
 
+// Define props interface for Footer component
 interface FooterProps {
   isDark: boolean;
 }
 
+// Footer component that adapts to light/dark mode
 export function Footer({ isDark }: FooterProps) {
   return (
+    // Main footer container with conditional dark/light text color
     <footer className={`text-sm ${isDark ? "text-gray-300" : "text-black"}`}>
+      {/* Flex container for footer content */}
       <div className="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
+        {/* Logo and brand name */}
         <a
           href="/"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
+          {/* Stacked weather icons */}
           <div className="relative">
             <Cloud className="w-8 h-8 text-blue-500" />
             <CloudRain className="w-6 h-6 text-blue-400 absolute -bottom-1 -right-1" />
@@ -19,9 +26,12 @@ export function Footer({ isDark }: FooterProps) {
           <span className="text-xl font-semibold text-blue-500">WEATHER</span>
         </a>
 
+        {/* Copyright text */}
         <p className="text-sm">© Copyright 2025. All Rights Reserved.</p>
 
+        {/* Social media links */}
         <div className="flex -mx-2">
+          {/* Facebook link */}
           <a
             href="#"
             className={`mx-2 transition-colors duration-300 ${
@@ -29,6 +39,7 @@ export function Footer({ isDark }: FooterProps) {
             } hover:text-blue-500 dark:hover:text-blue-400`}
             aria-label="Facebook"
           >
+            {/* Facebook icon */}
             <svg
               className="w-5 h-5 fill-current"
               viewBox="0 0 24 24"
@@ -39,6 +50,7 @@ export function Footer({ isDark }: FooterProps) {
             </svg>
           </a>
 
+          {/* Github link */}
           <a
             href="#"
             className={`mx-2 transition-colors duration-300 ${
@@ -46,6 +58,7 @@ export function Footer({ isDark }: FooterProps) {
             } hover:text-blue-500 dark:hover:text-blue-400`}
             aria-label="Github"
           >
+            {/* Github icon */}
             <svg
               className="w-5 h-5 fill-current"
               viewBox="0 0 24 24"

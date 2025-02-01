@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import { useEffect, useState } from "react";
 import {
   Calendar,
@@ -14,27 +15,34 @@ import { convertTemperature } from "../../utils/temperatureUtils";
 import { useTranslation } from "react-i18next";
 import { Skeleton } from "../ui/Skeleton";
 
+// Interface for component props
 interface WeeklyForecastProps {
-  isDark: boolean;
-  latitude: number;
-  longitude: number;
-  units: "celsius" | "fahrenheit";
-  windSpeedUnit: string;
+  isDark: boolean; // Controls dark/light theme
+  latitude: number; // Geographic latitude
+  longitude: number; // Geographic longitude
+  units: "celsius" | "fahrenheit"; // Temperature unit
+  windSpeedUnit: string; // Wind speed measurement unit
 }
 
+// Interface for daily weather forecast data
 interface DailyForecast {
-  dt: number;
-  temp_max: number;
-  temp_min: number;
+  dt: number; // Unix timestamp
+  temp_max: number; // Maximum temperature
+  temp_min: number; // Minimum temperature
   weather: {
     id: number;
     main: string;
     description: string;
-    icon: string;
+    icon: string; // Weather icon code
   };
-  date: Date;
+  date: Date; // Forecast date
 }
 
+/**
+ * Returns the appropriate weather icon component based on the weather code
+ * @param iconCode - Weather condition code from API
+ * @returns React component representing the weather condition
+ */
 const getWeatherIcon = (iconCode: string) => {
   const size = "w-6 h-6";
   switch (iconCode.slice(0, 2)) {
@@ -56,6 +64,10 @@ const getWeatherIcon = (iconCode: string) => {
   }
 };
 
+/**
+ * Skeleton loader component for the weekly forecast
+ * @param isDark - Theme toggle for dark/light mode
+ */
 function WeeklyForecastSkeleton({ isDark }: { isDark: boolean }) {
   return (
     <div
@@ -97,6 +109,15 @@ function WeeklyForecastSkeleton({ isDark }: { isDark: boolean }) {
   );
 }
 
+/**
+ * WeeklyForecast component displays a 7-day weather forecast
+ * Features:
+ * - Displays daily high and low temperatures
+ * - Shows weather conditions with icons
+ * - Supports dark/light theme
+ * - Includes loading and error states
+ * - Internationalization support
+ */
 export function WeeklyForecast({
   isDark,
   latitude,
@@ -108,6 +129,7 @@ export function WeeklyForecast({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch forecast data when coordinates change
   useEffect(() => {
     const loadForecasts = async () => {
       if (!latitude || !longitude) return;
@@ -128,10 +150,12 @@ export function WeeklyForecast({
     loadForecasts();
   }, [latitude, longitude]);
 
+  // Display loading state
   if (loading) {
     return <WeeklyForecastSkeleton isDark={isDark} />;
   }
 
+  // Display error state
   if (error) {
     return (
       <div className="lg:col-span-6 flex flex-col items-center justify-center h-48 text-red-500">
@@ -141,10 +165,11 @@ export function WeeklyForecast({
     );
   }
 
+  // Render weekly forecast
   return (
     <div
       className={`lg:col-span-6 rounded-xl md:rounded-2xl p-4 md:p-6 ${
-        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-md"
+        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-sm"
       }`}
     >
       <div className="flex items-center justify-between mb-6">

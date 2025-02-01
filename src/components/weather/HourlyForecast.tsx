@@ -15,6 +15,9 @@ import { convertWindSpeed } from "../../utils/windSpeedUtils";
 import { useTranslation } from "react-i18next";
 import { Skeleton } from "../ui/Skeleton";
 
+/**
+ * Props interface for the HourlyForecast component
+ */
 interface HourlyForecastProps {
   isDark: boolean;
   latitude: number;
@@ -23,6 +26,9 @@ interface HourlyForecastProps {
   windSpeedUnit: string;
 }
 
+/**
+ * Interface defining the structure of hourly weather data
+ */
 interface HourlyData {
   time: string;
   temp: number;
@@ -34,6 +40,11 @@ interface HourlyData {
   windSpeed: number;
 }
 
+/**
+ * Maps weather icon codes to corresponding Lucide icons
+ * @param iconCode - OpenWeatherMap icon code
+ * @returns JSX Element of the corresponding weather icon
+ */
 const getWeatherIcon = (iconCode: string) => {
   const size = "w-6 h-6";
   switch (iconCode.slice(0, 2)) {
@@ -55,6 +66,10 @@ const getWeatherIcon = (iconCode: string) => {
   }
 };
 
+/**
+ * Loading skeleton component for HourlyForecast
+ * @param props.isDark - Dark mode toggle
+ */
 function HourlyForecastSkeleton({ isDark }: { isDark: boolean }) {
   return (
     <div
@@ -93,6 +108,15 @@ function HourlyForecastSkeleton({ isDark }: { isDark: boolean }) {
   );
 }
 
+/**
+ * Component to display weather data for a specific hour
+ * @param props - Component properties including weather data and display preferences
+ * @param props.data - Weather data for the specific hour
+ * @param props.isDark - Dark mode toggle
+ * @param props.isNow - Indicates if this is the current hour
+ * @param props.units - Temperature unit (celsius/fahrenheit)
+ * @param props.windSpeedUnit - Wind speed measurement unit
+ */
 const HourCard = ({
   data,
   isDark,
@@ -152,6 +176,11 @@ const HourCard = ({
   );
 };
 
+/**
+ * Main HourlyForecast component that displays weather forecast for next few hours
+ * Fetches and displays hourly weather data including temperature, precipitation, wind, and humidity
+ * @param props - Component properties including location coordinates and display preferences
+ */
 export function HourlyForecast({
   isDark,
   latitude,
@@ -164,6 +193,10 @@ export function HourlyForecast({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Fetches and formats hourly forecast data
+   * Updates component state with the formatted data or error message
+   */
   useEffect(() => {
     const loadHourlyForecast = async () => {
       if (!latitude || !longitude) return;
@@ -214,7 +247,7 @@ export function HourlyForecast({
   return (
     <div
       className={`lg:col-span-6 rounded-xl md:rounded-2xl p-4 md:p-6 ${
-        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-md"
+        isDark ? "bg-[#2C2C2E]" : "bg-white shadow-sm"
       }`}
     >
       <div className="flex items-center justify-between mb-6">

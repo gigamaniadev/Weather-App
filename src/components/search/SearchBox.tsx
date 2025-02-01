@@ -1,11 +1,14 @@
+// Import necessary hooks and components
 import { useState, useRef, useEffect } from "react";
 import { Search, Loader2, MapPin } from "lucide-react";
 import { searchCities } from "../../services/weatherService";
 import { useDebounce } from "../../hooks/useDebounce";
 
+// Define props interface for the SearchBox component
 interface SearchBoxProps {
-  isDark: boolean;
+  isDark: boolean; // Current theme state
   onCitySelect: (
+    // Callback when a city is selected
     lat: number,
     lon: number,
     name: string,
@@ -13,6 +16,7 @@ interface SearchBoxProps {
   ) => void;
 }
 
+// Define the structure of city search results
 interface SearchResult {
   name: string;
   country: string;
@@ -22,13 +26,15 @@ interface SearchResult {
 }
 
 export function SearchBox({ isDark, onCitySelect }: SearchBoxProps) {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
-  const debouncedQuery = useDebounce(query, 500);
+  // State management for search functionality
+  const [query, setQuery] = useState(""); // Current search query
+  const [results, setResults] = useState<SearchResult[]>([]); // Search results
+  const [loading, setLoading] = useState(false); // Loading state
+  const [showResults, setShowResults] = useState(false); // Control results visibility
+  const searchRef = useRef<HTMLDivElement>(null); // Reference for click outside detection
+  const debouncedQuery = useDebounce(query, 500); // Debounced search query
 
+  // Handle clicks outside the search component
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -43,6 +49,7 @@ export function SearchBox({ isDark, onCitySelect }: SearchBoxProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Fetch search results when query changes
   useEffect(() => {
     const searchCity = async () => {
       if (debouncedQuery.length < 2) {
@@ -65,6 +72,7 @@ export function SearchBox({ isDark, onCitySelect }: SearchBoxProps) {
     searchCity();
   }, [debouncedQuery]);
 
+  // Handle selection of a search result
   const handleResultClick = (result: SearchResult) => {
     onCitySelect(result.lat, result.lon, result.name, result.country);
     setQuery("");
@@ -76,11 +84,17 @@ export function SearchBox({ isDark, onCitySelect }: SearchBoxProps) {
       ref={searchRef}
       className="relative flex-1 w-full sm:max-w-xl sm:mx-4 md:mx-8"
     >
+      {/* Search input container */}
       <div className="relative">
+        {/* Search icon */}
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+
+        {/* Loading indicator */}
         {loading && (
           <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 animate-spin text-blue-500" />
         )}
+
+        {/* Search input field */}
         <input
           type="text"
           value={query}
@@ -94,12 +108,14 @@ export function SearchBox({ isDark, onCitySelect }: SearchBoxProps) {
         />
       </div>
 
+      {/* Search results dropdown */}
       {showResults && results.length > 0 && (
         <div
           className={`absolute z-50 w-full mt-2 rounded-lg shadow-lg overflow-hidden ${
             isDark ? "bg-[#3A3A3C]" : "bg-white"
           }`}
         >
+          {/* Map through and render search results */}
           {results.map((result, index) => (
             <button
               key={`${result.lat}-${result.lon}-${index}`}

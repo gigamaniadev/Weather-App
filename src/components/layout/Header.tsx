@@ -1,19 +1,21 @@
+// Import necessary icons and components
 import { MapPin, Settings, Sun, Moon, Cloud, CloudRain } from "lucide-react";
 import { SearchBox } from "../search/SearchBox";
 import { LocationData } from "../../types";
 import { useEffect } from "react";
 
+// Define the props interface for the Header component
 interface HeaderProps {
-  isDark: boolean;
-  location: LocationData;
-  toggleTheme: () => void;
-  toggleSettings: () => void;
+  isDark: boolean; // Current theme state
+  location: LocationData; // Location information
+  toggleTheme: () => void; // Function to toggle between light/dark themes
+  toggleSettings: () => void; // Function to toggle settings panel
   onCitySelect: (
     lat: number,
     lon: number,
     name: string,
     country: string
-  ) => void;
+  ) => void; // Callback for when a city is selected
 }
 
 export function Header({
@@ -23,7 +25,7 @@ export function Header({
   toggleSettings,
   onCitySelect,
 }: HeaderProps) {
-  // Effect to check and apply the saved theme from localStorage on initial load
+  // Initialize theme from localStorage or system preferences on component mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
 
@@ -40,7 +42,7 @@ export function Header({
     }
   }, [isDark]);
 
-  // Handle theme toggle and persist it to localStorage
+  // Handle theme changes and persist to localStorage
   const handleThemeToggle = () => {
     toggleTheme(); // Toggle the theme state (dark <-> light)
     const newTheme = isDark ? "light" : "dark"; // Switch theme
@@ -50,17 +52,21 @@ export function Header({
 
   return (
     <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 md:mb-8">
+      {/* Logo and location section */}
       <div className="flex items-center gap-4 w-full sm:w-auto">
+        {/* Weather app logo and title */}
         <a
           href="/"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
+          {/* Overlapping cloud icons for logo */}
           <div className="relative">
             <Cloud className="w-8 h-8 text-blue-500" />
             <CloudRain className="w-6 h-6 text-blue-400 absolute -bottom-1 -right-1" />
           </div>
           <span className="text-xl font-semibold text-blue-500">WEATHER</span>
         </a>
+        {/* Current location display */}
         <div className="flex items-center gap-2">
           <MapPin className="w-5 h-5" />
           <span className="text-sm sm:text-base">
@@ -73,9 +79,12 @@ export function Header({
         </div>
       </div>
 
+      {/* Search box component */}
       <SearchBox isDark={isDark} onCitySelect={onCitySelect} />
 
+      {/* Settings and theme toggle buttons */}
       <div className="flex items-center gap-4 w-full sm:w-auto justify-end">
+        {/* Settings button */}
         <button
           onClick={toggleSettings}
           className={`p-2 rounded-lg ${
@@ -84,6 +93,7 @@ export function Header({
         >
           <Settings className="w-5 h-5" />
         </button>
+        {/* Theme toggle button */}
         <button
           onClick={handleThemeToggle} // Use the new handleThemeToggle
           className={`p-2 rounded-lg transition-colors ${

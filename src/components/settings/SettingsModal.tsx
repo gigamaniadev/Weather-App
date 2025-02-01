@@ -1,16 +1,18 @@
+// Import necessary hooks and components
 import { useEffect } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+// Define props interface for the Settings Modal
 interface SettingsModalProps {
-  isDark: boolean;
-  showSettings: boolean;
-  toggleSettings: () => void;
-  units: "celsius" | "fahrenheit";
+  isDark: boolean; // Current theme state
+  showSettings: boolean; // Modal visibility state
+  toggleSettings: () => void; // Function to toggle modal
+  units: "celsius" | "fahrenheit"; // Temperature unit preference
   setUnits: (units: "celsius" | "fahrenheit") => void;
-  windSpeed: string;
+  windSpeed: string; // Wind speed unit preference
   setWindSpeed: (speed: string) => void;
-  language: string;
+  language: string; // Language preference
   setLanguage: (lang: string) => void;
 }
 
@@ -27,26 +29,24 @@ export function SettingsModal({
 }: SettingsModalProps) {
   const { t, i18n } = useTranslation();
 
-  // Handle language change and persist in localStorage
+  // Handlers for settings changes with localStorage persistence
   const handleLanguageChange = (lang: string) => {
     setLanguage(lang);
     i18n.changeLanguage(lang);
     localStorage.setItem("language", lang); // Persist language
   };
 
-  // Handle units change and persist in localStorage
   const handleUnitsChange = (newUnits: "celsius" | "fahrenheit") => {
     setUnits(newUnits);
     localStorage.setItem("units", newUnits); // Persist units
   };
 
-  // Handle wind speed change and persist in localStorage
   const handleWindSpeedChange = (newSpeed: string) => {
     setWindSpeed(newSpeed);
     localStorage.setItem("windSpeed", newSpeed); // Persist wind speed
   };
 
-  // On component mount, check localStorage for saved preferences
+  // Initialize settings from localStorage on component mount
   useEffect(() => {
     const savedLanguage = localStorage.getItem("language");
     if (savedLanguage && savedLanguage !== language) {
@@ -65,8 +65,10 @@ export function SettingsModal({
     }
   }, [i18n, language, setLanguage, units, setUnits, windSpeed, setWindSpeed]);
 
+  // Early return if modal is not visible
   if (!showSettings) return null;
 
+  // Utility function for button styling
   const getButtonClasses = (selected: boolean) => {
     return selected
       ? "bg-blue-500 text-white"
@@ -76,12 +78,15 @@ export function SettingsModal({
   };
 
   return (
+    // Modal overlay
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      {/* Modal container */}
       <div
         className={`relative w-full max-w-md rounded-2xl p-6 ${
           isDark ? "bg-[#2C2C2E]" : "bg-white"
         }`}
       >
+        {/* Close button */}
         <button
           onClick={toggleSettings}
           className={`absolute right-4 top-4 p-2 rounded-lg transition-colors ${
@@ -91,10 +96,13 @@ export function SettingsModal({
         >
           <X className="w-5 h-5" />
         </button>
+
+        {/* Modal title */}
         <h2 className="text-xl font-semibold mb-6">{t("settings.title")}</h2>
 
+        {/* Settings sections container */}
         <div className="space-y-6">
-          {/* Temperature Units Section */}
+          {/* Temperature units section */}
           <div>
             <label className="block text-sm font-medium mb-2">
               {t("settings.units.title")}
@@ -119,7 +127,7 @@ export function SettingsModal({
             </div>
           </div>
 
-          {/* Wind Speed Section */}
+          {/* Wind speed units section */}
           <div>
             <label className="block text-sm font-medium mb-2">
               {t("settings.windSpeed.title")}
@@ -152,7 +160,7 @@ export function SettingsModal({
             </div>
           </div>
 
-          {/* Language Section */}
+          {/* Language selection section */}
           <div>
             <label className="block text-sm font-medium mb-2">
               {t("settings.language.title")}

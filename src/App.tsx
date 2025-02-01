@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import { useState, useEffect } from "react";
 import { Header } from "./components/layout/Header";
 import { Navigation } from "./components/layout/Navigation";
@@ -7,7 +8,7 @@ import { TomorrowWeather } from "./components/weather/TomorrowWeather";
 import { WeeklyForecast } from "./components/weather/WeeklyForecast";
 import { AirQuality } from "./components/weather/AirQuality";
 import { HourlyForecast } from "./components/weather/HourlyForecast";
-import { OtherCities } from "./components/weather/OtherCities";
+import { MajorCities } from "./components/weather/MajorCities";
 import { WeatherAlert } from "./components/weather/WeatherAlert";
 import { SettingsModal } from "./components/settings/SettingsModal";
 import {
@@ -19,7 +20,13 @@ import { getWindDirection } from "./utils/weatherUtils";
 import { LocationData, WeatherData, TomorrowWeatherData } from "./types";
 
 function App() {
-  const [isDark, setIsDark] = useState(true);
+  // Theme state and preferences
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme ? savedTheme === "dark" : false; // default to light theme
+  });
+
+  // Application state
   const [showSettings, setShowSettings] = useState(false);
   const [units, setUnits] = useState<"celsius" | "fahrenheit">("celsius");
   const [windSpeed, setWindSpeed] = useState("kmh");
@@ -27,6 +34,8 @@ function App() {
   const [activeTab, setActiveTab] = useState<"today" | "tomorrow" | "week">(
     "today"
   );
+
+  // Location and weather state
   const [location, setLocation] = useState<LocationData>({
     city: "Loading...",
     country: "",
@@ -41,9 +50,15 @@ function App() {
   const [weatherLoading, setWeatherLoading] = useState(true);
   const [weatherError, setWeatherError] = useState<string | null>(null);
 
-  const toggleTheme = () => setIsDark(!isDark);
+  // UI state handlers
+  const toggleTheme = () => {
+    const newTheme = !isDark;
+    setIsDark(newTheme);
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
+  };
   const toggleSettings = () => setShowSettings(!showSettings);
 
+  // Data fetching function
   const loadWeatherData = async (latitude: number, longitude: number) => {
     try {
       setWeatherLoading(true);
@@ -107,6 +122,7 @@ function App() {
     }
   };
 
+  // Location selection handler
   const handleCitySelect = (
     lat: number,
     lon: number,
@@ -124,6 +140,7 @@ function App() {
     loadWeatherData(lat, lon);
   };
 
+  // Initial geolocation effect
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -154,12 +171,14 @@ function App() {
     }
   }, []);
 
+  // Weather data update effect
   useEffect(() => {
     if (location.lat && location.lon) {
       loadWeatherData(location.lat, location.lon);
     }
   }, [units]);
 
+  // Weather content renderer based on active tab
   const renderWeatherContent = () => {
     switch (activeTab) {
       case "today":
@@ -200,11 +219,13 @@ function App() {
   };
 
   return (
+    // Main app container with theme-based styling
     <div
       className={`min-h-screen ${
         isDark ? "bg-[#1C1C1E] text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
+      {/* Settings Modal Component */}
       <SettingsModal
         isDark={isDark}
         showSettings={showSettings}
@@ -218,11 +239,13 @@ function App() {
       />
 
       <div className="max-w-[1600px] mx-auto p-3 sm:p-4 md:p-6 lg:p-8">
+        {/* Main content container */}
         <div
           className={`rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 ${
-            isDark ? "bg-[#2C2C2E]" : "bg-white shadow-xl"
+            isDark ? "bg-[#2C2C2E]" : "bg-white shadow-sm"
           }`}
         >
+          {/* Header Section */}
           <Header
             isDark={isDark}
             location={location}
@@ -231,17 +254,22 @@ function App() {
             onCitySelect={handleCitySelect}
           />
 
+          {/* Navigation Tabs */}
           <Navigation
             isDark={isDark}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
 
+          {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
             {activeTab !== "week" ? (
+              // Today and Tomorrow view layout
               <>
+                {/* Main weather information */}
                 <div className="lg:col-span-3">{renderWeatherContent()}</div>
 
+                {/* Additional weather data sections */}
                 <div className="lg:col-span-9">
                   <div className="grid grid-cols-1 gap-4 md:gap-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
@@ -269,7 +297,7 @@ function App() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
                       <div className="lg:col-span-8">
-                        <OtherCities
+                        <MajorCities
                           isDark={isDark}
                           units={units}
                           latitude={location.lat}
@@ -288,7 +316,8 @@ function App() {
                 </div>
               </>
             ) : (
-              <div className="lg:col-span-12 space-y-4 md:space-y-6">
+              // Weekly view layout
+              <div className="lg:col-span-12">
                 <WeeklyForecast
                   isDark={isDark}
                   latitude={location.lat}
@@ -296,34 +325,11 @@ function App() {
                   units={units}
                   windSpeedUnit={windSpeed}
                 />
-
-                <AirQuality
-                  isDark={isDark}
-                  latitude={location.lat}
-                  longitude={location.lon}
-                />
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
-                  <div className="lg:col-span-8">
-                    <OtherCities
-                      isDark={isDark}
-                      units={units}
-                      latitude={location.lat}
-                      longitude={location.lon}
-                    />
-                  </div>
-                  <div className="lg:col-span-4">
-                    <WeatherAlert
-                      isDark={isDark}
-                      latitude={location.lat}
-                      longitude={location.lon}
-                    />
-                  </div>
-                </div>
               </div>
             )}
           </div>
         </div>
+        {/* Footer Component */}
         <Footer isDark={isDark} />
       </div>
     </div>
